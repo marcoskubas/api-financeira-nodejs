@@ -105,5 +105,25 @@ app.get('/statement/date', verifyIfExistAccountCPF, (request, response) => {
     return response.json(statement);
 });
 
+app.put('/account', verifyIfExistAccountCPF, (request, response) => {
+    const { customer }  = request;
+    const { name }      = request.body;
+    customer.name       = name;
+    console.log(customer);
+    return response.status(200).send();
+});
+
+app.get('/account', verifyIfExistAccountCPF, (request, response) => {
+    const { customer }  = request;
+    return response.json(customer);
+});
+
+app.delete('/account', verifyIfExistAccountCPF, (request, response) => {
+    const { customer } = request;
+    customers.splice(customer, 1);
+    console.log(customers);
+    return response.status(204).send();
+});
+
 //localhost:3000
 app.listen(3000);
