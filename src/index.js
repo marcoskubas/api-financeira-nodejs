@@ -125,5 +125,11 @@ app.delete('/account', verifyIfExistAccountCPF, (request, response) => {
     return response.status(204).send();
 });
 
+app.get('/balance', verifyIfExistAccountCPF, (request, response) => {
+    const { customer }  = request;
+    const balance = getBalance(customer.statement);
+    return response.json(balance);
+});
+
 //localhost:3000
 app.listen(3000);
