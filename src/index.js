@@ -120,7 +120,12 @@ app.get('/account', verifyIfExistAccountCPF, (request, response) => {
 
 app.delete('/account', verifyIfExistAccountCPF, (request, response) => {
     const { customer } = request;
-    customers.splice(customer, 1);
+    const indexCustomer = customers.findIndex(customerIndex => customerIndex.cpf === customer.cpf);
+    const balance = getBalance(customer.statement);
+    if(balance !==0){
+        return response.status(400).json({error: "To delete an account, the balance must be reset"})
+    }
+    customers.splice(indexCustomer, 1);
     console.log(customers);
     return response.status(204).send();
 });
